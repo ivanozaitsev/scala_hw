@@ -18,7 +18,7 @@ object ProgrammingLanguagesOneObj {
 object LanguageAttributes {
   def printCompilationType(language: LanguageAttributes): Unit = {
     val compilationType = language.languageType.toLowerCase
-
+    // todo match / case
     if (compilationType == "java" || compilationType == "c" || compilationType == "c++" ||
       compilationType == "rust" || compilationType == "scala") {
       println(s"${language.languageType} is a Compiled language.")
