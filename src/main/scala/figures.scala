@@ -1,9 +1,11 @@
 package main.scala
 import main.scala.FigureProcessing.getRandomSideLength
+// todo rm import
 import scala.util.Random
 
 // Task #3
 object FigureProcessing {
+
   def getRandomSideLength: Double = {
     Random.between(1, 20).toDouble
   }
@@ -20,10 +22,12 @@ object FigureProcessing {
 
   def sumOfAreas(figures: (Triangle, Rectangle, Rhomb, Square, Circle)): Double = {
     figures._1.getArea + figures._2.getArea + figures._3.getArea + figures._4.getArea + figures._5.getArea
+    // todo iteration
   }
 
   def sumOfPerimeters(figures: (Triangle, Rectangle, Rhomb, Square, Circle)): Double = {
     figures._1.getPerimeter + figures._2.getPerimeter + figures._3.getPerimeter + figures._4.getPerimeter + figures._5.getPerimeter
+    // todo iteration
   }
 
   def main(args: Array[String]): Unit = {
