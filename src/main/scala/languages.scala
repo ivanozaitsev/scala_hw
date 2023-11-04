@@ -18,15 +18,14 @@ object ProgrammingLanguagesOneObj {
 object LanguageAttributes {
   def printCompilationType(language: LanguageAttributes): Unit = {
     val compilationType = language.languageType.toLowerCase
-    // todo match / case
-    if (compilationType == "java" || compilationType == "c" || compilationType == "c++" ||
-      compilationType == "rust" || compilationType == "scala") {
-      println(s"${language.languageType} is a Compiled language.")
-    } else if (compilationType == "python" || compilationType == "javascript" ||
-      compilationType == "ruby" || compilationType == "php") {
-      println(s"${language.languageType} is an Interpreted language.")
-    } else {
-      println(s"Compilation type for ${language.languageType} is unknown.")
+
+    compilationType match {
+      case "java" | "c" | "c++" | "rust" | "scala" =>
+        println(s"${language.languageType} is a Compiled language.")
+      case "python" | "javascript" | "ruby" | "php" =>
+        println(s"${language.languageType} is an Interpreted language.")
+      case _ =>
+        println(s"Compilation type for ${language.languageType} is unknown.")
     }
   }
 }
