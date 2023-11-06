@@ -2,6 +2,9 @@ import java.time.LocalDateTime
 import main.scala.ProgrammingLanguagesOne
 import main.scala.LanguageAttributes
 import main.scala.ProgrammingLanguagesTwo
+import main.scala.Language
+import main.scala.ProgrammingLanguage
+import main.scala.HumanCommunicationLanguage
 
 // Output of task 5
 object ProgrammingLanguagesOneObj {
@@ -57,6 +60,50 @@ object ProgrammingLanguagesTwoObj {
     println(s"${python.name} is ${if (python.isCompiled) "Compiled" else "not Compiled"} language")
     println(s"${java.name} is ${if (java.isCompiled) "Compiled" else "not Compiled"} language")
     println(s"${unknown.name} is ${if (unknown.isCompiled) "Compiled" else "not Compiled"} language")
+  }
+}
+
+object LanguageDescription {
+  def describe(language: Language): Unit = language match {
+    case ProgrammingLanguage(name, version, releaseDate) =>
+      println(s"Programming Language: $name, Version: $version, Release Date: $releaseDate")
+    case HumanCommunicationLanguage(languageName, countryOfOrigin, usersCount) =>
+      println(s"Human Communication Language: $languageName, Country of Origin: $countryOfOrigin, Active Users: $usersCount")
+  }
+
+  def isCompiled(language: Language): Boolean = language match {
+    case _: ProgrammingLanguage => true
+    case _: HumanCommunicationLanguage => false
+  }
+
+  def extractProgrammingInfo(languages: Vector[Language]): Vector[Option[String]] = {
+    languages.map {
+      case ProgrammingLanguage(name, version, _) => Some(s"Programming Language: $name, Version: $version")
+      case _ => None
+    }
+  }
+
+  def main(args: Array[String]): Unit = {
+    val english = HumanCommunicationLanguage("Ukrainian", "Kyivan Rus'", 50000000)
+    val python = ProgrammingLanguage("Python", "3.9", LocalDateTime.of(2020, 10, 5, 0, 0))
+    val scala = ProgrammingLanguage("Scala", "2.13", LocalDateTime.of(2019, 7, 7, 0, 0))
+
+    describe(scala)
+    describe(python)
+    describe(english)
+
+    val languages = Vector(scala, python, english)
+
+    val isScalaCompiled = isCompiled(scala)
+    val isPythonCompiled = isCompiled(python)
+    val isEnglishCompiled = isCompiled(english)
+
+    println(s"Is Scala Compiled: $isScalaCompiled")
+    println(s"Is Python Compiled: $isPythonCompiled")
+    println(s"Is English Compiled: $isEnglishCompiled")
+
+    val programmingInfo = extractProgrammingInfo(languages)
+    programmingInfo.foreach(println)
   }
 }
 
