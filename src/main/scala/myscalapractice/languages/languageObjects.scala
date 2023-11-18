@@ -1,5 +1,6 @@
 package main.scala.com.myscalapractice.languages
 import main.scala.com.myscalapractice.utils.LanguageAttributes
+import scala.util.{Try, Success, Failure}
 import java.time.LocalDateTime
 
 
@@ -61,6 +62,7 @@ object ProgrammingLanguagesTwoObj {
 }
 
 object LanguageDescription {
+
   def describe(language: Language): Unit = language match {
     case ProgrammingLanguage(name, version, releaseDate) =>
       println(s"Programming Language: $name, Version: $version, Release Date: $releaseDate")
@@ -68,9 +70,9 @@ object LanguageDescription {
       println(s"Human Communication Language: $languageName, Country of Origin: $countryOfOrigin, Active Users: $usersCount")
   }
 
-  def isCompiled(language: Language): Boolean = language match {
-    case _: ProgrammingLanguage => true
-    case _: HumanCommunicationLanguage => false
+  def isCompiled(language: Language): Try[Boolean] = language match {
+    case _: ProgrammingLanguage => Success(true)
+    case _: HumanCommunicationLanguage => Failure(new UnsupportedOperationException("HumanCommunicationLanguage is not compiled."))
   }
 
   def extractProgrammingInfo(languages: Vector[Language]): Vector[Option[String]] = {
@@ -91,17 +93,25 @@ object LanguageDescription {
 
     val languages = Vector(scala, python, english)
 
-    val isScalaCompiled = isCompiled(scala)
-    val isPythonCompiled = isCompiled(python)
-    val isEnglishCompiled = isCompiled(english)
+    isCompiled(scala) match {
+      case Success(value) => println(s"Is Scala Compiled: $value")
+      case Failure(exception) => println(s"Error checking if Scala is compiled: ${exception.getMessage}")
+    }
 
-    println(s"Is Scala Compiled: $isScalaCompiled")
-    println(s"Is Python Compiled: $isPythonCompiled")
-    println(s"Is English Compiled: $isEnglishCompiled")
+    isCompiled(python) match {
+      case Success(value) => println(s"Is Python Compiled: $value")
+      case Failure(exception) => println(s"Error checking if Python is compiled: ${exception.getMessage}")
+    }
+
+    isCompiled(english) match {
+      case Success(value) => println(s"Is English Compiled: $value")
+      case Failure(exception) => println(s"Error checking if English is compiled: ${exception.getMessage}")
+    }
 
     val programmingInfo = extractProgrammingInfo(languages)
     programmingInfo.foreach(println)
   }
 }
+
 
 
