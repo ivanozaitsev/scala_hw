@@ -1,4 +1,5 @@
-package main.scala
+package main.scala.com.myscalapractice.figures
+
 import math.Pi
 import java.time.LocalDateTime
 

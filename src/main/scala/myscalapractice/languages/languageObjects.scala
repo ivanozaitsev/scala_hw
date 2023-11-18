@@ -1,10 +1,7 @@
+package main.scala.com.myscalapractice.languages
+import main.scala.com.myscalapractice.utils.LanguageAttributes
 import java.time.LocalDateTime
-import main.scala.ProgrammingLanguagesOne
-import main.scala.LanguageAttributes
-import main.scala.ProgrammingLanguagesTwo
-import main.scala.Language
-import main.scala.ProgrammingLanguage
-import main.scala.HumanCommunicationLanguage
+
 
 // Output of task 5
 object ProgrammingLanguagesOneObj {
