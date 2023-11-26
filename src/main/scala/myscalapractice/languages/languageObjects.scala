@@ -70,9 +70,10 @@ object LanguageDescription {
       println(s"Human Communication Language: $languageName, Country of Origin: $countryOfOrigin, Active Users: $usersCount")
   }
 
-  def isCompiled(language: Language): Try[Boolean] = language match {
-    case _: ProgrammingLanguage => Success(true)
-    case _: HumanCommunicationLanguage => Failure(new UnsupportedOperationException("HumanCommunicationLanguage is not compiled."))
+  def isCompiled(language: Language): Option[(String, Boolean)] = language match {
+    case lang: ProgrammingLanguage => Some((lang.name, true))
+    case lang: HumanCommunicationLanguage => Some((lang.languageName, false))
+    case _ => None
   }
 
   def extractProgrammingInfo(languages: Vector[Language]): Vector[Option[String]] = {
@@ -93,25 +94,14 @@ object LanguageDescription {
 
     val languages = Vector(scala, python, english)
 
-    isCompiled(scala) match {
-      case Success(value) => println(s"Is Scala Compiled: $value")
-      case Failure(exception) => println(s"Error checking if Scala is compiled: ${exception.getMessage}")
-    }
-
-    isCompiled(python) match {
-      case Success(value) => println(s"Is Python Compiled: $value")
-      case Failure(exception) => println(s"Error checking if Python is compiled: ${exception.getMessage}")
-    }
-
-    isCompiled(english) match {
-      case Success(value) => println(s"Is English Compiled: $value")
-      case Failure(exception) => println(s"Error checking if English is compiled: ${exception.getMessage}")
+    languages.foreach { lang =>
+      isCompiled(lang) match {
+        case Some((name, value)) => println(s"Is $name Compiled: $value")
+        case None => println(s"Compilation information not available for ${lang.getClass.getSimpleName}")
+      }
     }
 
     val programmingInfo = extractProgrammingInfo(languages)
     programmingInfo.foreach(println)
   }
 }
-
-
-
