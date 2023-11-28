@@ -1,4 +1,5 @@
-package main.scala
+package main.scala.com.myscalapractice.figures
+
 import math.Pi
 import java.time.LocalDateTime
 
@@ -57,4 +58,9 @@ case class ProgrammingLanguagesTwo(name: String, version: String, versionRelease
   }
 }
 
+sealed trait Language
+
+case class ProgrammingLanguage(name: String, version: String, versionReleaseDate: LocalDateTime) extends Language
+
+case class HumanCommunicationLanguage(languageName: String, countryOfOrigin: String, activeUsersCount: Int) extends Language
 

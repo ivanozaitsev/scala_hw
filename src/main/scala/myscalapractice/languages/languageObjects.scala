@@ -1,7 +1,8 @@
+package main.scala.com.myscalapractice.languages
+import main.scala.com.myscalapractice.utils.LanguageAttributes
+import scala.util.{Try, Success, Failure}
 import java.time.LocalDateTime
-import main.scala.ProgrammingLanguagesOne
-import main.scala.LanguageAttributes
-import main.scala.ProgrammingLanguagesTwo
+
 
 // Output of task 5
 object ProgrammingLanguagesOneObj {
@@ -60,4 +61,47 @@ object ProgrammingLanguagesTwoObj {
   }
 }
 
+object LanguageDescription {
 
+  def describe(language: Language): Unit = language match {
+    case ProgrammingLanguage(name, version, releaseDate) =>
+      println(s"Programming Language: $name, Version: $version, Release Date: $releaseDate")
+    case HumanCommunicationLanguage(languageName, countryOfOrigin, usersCount) =>
+      println(s"Human Communication Language: $languageName, Country of Origin: $countryOfOrigin, Active Users: $usersCount")
+  }
+
+  def isCompiled(language: Language): Option[(String, Boolean)] = language match {
+    case lang: ProgrammingLanguage => Some((lang.name, true))
+    case lang: HumanCommunicationLanguage => Some((lang.languageName, false))
+    case _ => None
+  }
+
+  def extractProgrammingInfo(languages: Vector[Language]): Vector[Option[String]] = {
+    languages.map {
+      case ProgrammingLanguage(name, version, _) => Some(s"Programming Language: $name, Version: $version")
+      case _ => None
+    }
+  }
+
+  def main(args: Array[String]): Unit = {
+    val english = HumanCommunicationLanguage("Ukrainian", "Kyivan Rus'", 50000000)
+    val python = ProgrammingLanguage("Python", "3.9", LocalDateTime.of(2020, 10, 5, 0, 0))
+    val scala = ProgrammingLanguage("Scala", "2.13", LocalDateTime.of(2019, 7, 7, 0, 0))
+
+    describe(scala)
+    describe(python)
+    describe(english)
+
+    val languages = Vector(scala, python, english)
+
+    languages.foreach { lang =>
+      isCompiled(lang) match {
+        case Some((name, value)) => println(s"Is $name Compiled: $value")
+        case None => println(s"Compilation information not available for ${lang.getClass.getSimpleName}")
+      }
+    }
+
+    val programmingInfo = extractProgrammingInfo(languages)
+    programmingInfo.foreach(println)
+  }
+}
